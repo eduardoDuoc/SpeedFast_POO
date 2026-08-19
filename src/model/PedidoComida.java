@@ -2,28 +2,17 @@ package model;
 
 public class PedidoComida extends Pedido {
 
-    private boolean mochilaTermica;
 
-    public PedidoComida(String idPedido, String direccionEntrega, String tipoPedido, boolean mochilaTermica) {
-        super(idPedido, direccionEntrega, tipoPedido);
-        this.mochilaTermica = mochilaTermica;
+    public PedidoComida(String idPedido, String direccionEntrega, double distanciaKm) {
+        super(idPedido, direccionEntrega, distanciaKm);
     }
 
     @Override
-    public void asignarRepartidor() {
-        System.out.println("\n[Pedido Comida]");
-        System.out.println("Asignando repartidor...");
+    public void calcularTiempoEntrega() {
 
-        if (mochilaTermica) {
-            System.out.println("Verificando mochila térmica... OK");
-        } else {
-            System.out.println("Repartidor sin mochila térmica.");
-        }
+        double tiempo = 15 + (2 * getDistanciaKm());
+
+        System.out.println("Tiempo estimado de entrega: " + tiempo + " minutos");
     }
 
-    @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Verificando mochila térmica... OK");
-        System.out.println("Pedido asignado a " + nombreRepartidor);
-    }
 }

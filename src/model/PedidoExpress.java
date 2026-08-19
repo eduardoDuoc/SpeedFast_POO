@@ -2,30 +2,19 @@ package model;
 
 public class PedidoExpress extends Pedido {
 
-    private boolean repartidorCercano;
-    private boolean repartidorDisponible;
-
-    public PedidoExpress(String idPedido, String direccionEntrega, String tipoPedido, boolean repartidorCercano, boolean repartidorDisponible) {
-        super(idPedido, direccionEntrega, tipoPedido);
-        this.repartidorCercano = repartidorCercano;
-        this.repartidorDisponible = repartidorDisponible;
+    public PedidoExpress(String idPedido, String direccionEntrega, double distanciaKm) {
+        super(idPedido, direccionEntrega, distanciaKm);
     }
 
     @Override
-    public void asignarRepartidor() {
-        System.out.println("\n[Pedido Express]");
-        System.out.println("Asignando repartidor...");
+    public void calcularTiempoEntrega() {
 
-        if (repartidorCercano && repartidorDisponible) {
-            System.out.println("Repartidor cercano con disponibilidad inmediata encontrado.");
-        } else {
-            System.out.println("No hay repartidor cercano disponible.");
+        int tiempo = 10;
+
+        if (getDistanciaKm() > 5) {
+            tiempo += 5;
         }
-    }
 
-    @Override
-    public void asignarRepartidor(String nombreRepartidor) {
-        System.out.println("Verificando disponibilidad inmediata...");
-        System.out.println("Pedido asignado a " + nombreRepartidor);
+        System.out.println("Tiempo estimado de entrega: " + tiempo + " minutos");
     }
 }

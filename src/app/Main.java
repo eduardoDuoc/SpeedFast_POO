@@ -1,6 +1,5 @@
 package app;
 
-import model.Pedido;
 import model.PedidoComida;
 import model.PedidoEncomienda;
 import model.PedidoExpress;
@@ -9,20 +8,19 @@ public class Main {
 
     public static void main(String[] args) {
 
+        PedidoComida comida = new PedidoComida("001", "San Bernardo", 2);
 
-        PedidoComida comida = new PedidoComida("P01", "San Bernardo", "comida", true);
+        PedidoEncomienda encomienda = new PedidoEncomienda("002", "Buin", 6);
 
-        PedidoEncomienda encomienda = new PedidoEncomienda("P002", "Buin", "encomienda", true, true);
+        PedidoExpress express = new PedidoExpress("003", "Av. Italia 123", 12);
 
-        PedidoExpress express = new PedidoExpress("P03", "Rancagua", "express", true, true);
+        comida.mostrarResumen();
+        comida.calcularTiempoEntrega();
 
-        comida.asignarRepartidor();
-        comida.asignarRepartidor("Juan Pérez");
+        encomienda.mostrarResumen();
+        encomienda.calcularTiempoEntrega();
 
-        encomienda.asignarRepartidor();
-        encomienda.asignarRepartidor("Camila Soto");
-
-        express.asignarRepartidor();
-        express.asignarRepartidor("Luis Díaz");
+        express.mostrarResumen();
+        express.calcularTiempoEntrega();
     }
 }
