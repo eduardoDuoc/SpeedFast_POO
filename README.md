@@ -1,6 +1,6 @@
 # SpeedFast
 
-Proyecto desarrollado en **Java** para simular la asignación de repartidores en la empresa **SpeedFast** según distintos tipos de pedidos:
+Proyecto desarrollado en **Java** para simular la gestión de distintos tipos de pedidos de la empresa **SpeedFast**:
 
 - Comida
 - Encomiendas
@@ -9,8 +9,8 @@ Proyecto desarrollado en **Java** para simular la asignación de repartidores en
 El proyecto aplica conceptos de **Programación Orientada a Objetos (POO)** como:
 
 - Herencia
-- Polimorfismo
-- Sobreescritura de métodos
-- Sobrecarga de métodos
+- Clases abstractas
+- Sobrescritura de métodos
+- Encapsulamiento
 
-Cada tipo de pedido realiza sus propias validaciones al momento de asignar un repartidor.
+En esta segunda etapa se implementa la clase abstracta **Pedido**, de la cual heredan los distintos tipos de pedidos. Cada uno calcula su tiempo estimado de entrega según su propia lógica y distancia.
