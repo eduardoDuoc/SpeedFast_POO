@@ -7,6 +7,11 @@ public class PedidoExpress extends Pedido {
     }
 
     @Override
+    public void reservar() {
+        System.out.println("Pedido express reservado");
+    }
+
+    @Override
     public void calcularTiempoEntrega() {
 
         int tiempo = 10;
@@ -16,5 +21,11 @@ public class PedidoExpress extends Pedido {
         }
 
         System.out.println("Tiempo estimado de entrega: " + tiempo + " minutos");
+    }
+
+    @Override
+    public void asignarRepartidor() {
+        asignarRepartidor("Carlos");
+
     }
 }

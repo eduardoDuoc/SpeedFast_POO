@@ -7,10 +7,21 @@ public class PedidoEncomienda extends Pedido {
     }
 
     @Override
+    public void reservar() {
+        System.out.println("Pedido encomienda reservado");
+    }
+
+    @Override
     public void calcularTiempoEntrega() {
 
         int tiempo = (int) (20 + (1.5 * getDistanciaKm()));
 
         System.out.println("Tiempo estimado de entrega: " + tiempo + " minutos");
+    }
+
+    @Override
+    public void asignarRepartidor() {
+        asignarRepartidor("Catalina");
+
     }
 }

@@ -6,11 +6,13 @@ Proyecto desarrollado en **Java** para simular la gestión de distintos tipos de
 - Encomiendas
 - Compras Express
 
-El proyecto aplica conceptos de **Programación Orientada a Objetos (POO)** como:
+# Diseño del sistema
 
-- Herencia
-- Clases abstractas
-- Sobrescritura de métodos
-- Encapsulamiento
+# Escalabilidad
+El sistema permite agregar nuevos tipos de pedidos sin modificar toda la estructura existente. Al trabajar con una clase abstracta `Pedido`, se pueden crear nuevas subclases que implementen su propia lógica de asignación de repartidor, reserva y cálculo de tiempo de entrega.
 
-En esta segunda etapa se implementa la clase abstracta **Pedido**, de la cual heredan los distintos tipos de pedidos. Cada uno calcula su tiempo estimado de entrega según su propia lógica y distancia.
+# Reutilización
+La clase abstracta `Pedido` concentra atributos y métodos comunes como `idPedido`, `direccionEntrega`, `distanciaKm`, `repartidor` y `mostrarResumen()`. De esta forma, las subclases `PedidoComida`, `PedidoEncomienda` y `PedidoExpress` reutilizan código y solo implementan los comportamientos específicos de cada tipo de pedido.
+
+# Mantenibilidad
+Las interfaces `Despachable`, `Cancelable` y `Rastreable` separan responsabilidades específicas del sistema. La clase `ControladorDeEnvios` implementa estas funciones, permitiendo mantener la lógica de despacho, cancelación e historial separada de las clases de pedido. Esto facilita realizar cambios sin afectar otras partes del sistema.
