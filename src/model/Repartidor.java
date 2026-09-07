@@ -18,7 +18,11 @@ public class Repartidor implements Runnable {
     public void run() {
         for (Pedido pedido : pedidosAsignados) {
 
-            System.out.println("Repartiendo pedido...");
+            System.out.println(
+                    "[Repartidor: " + nombre + "] Entregando "
+                            + pedido.getClass().getSimpleName()
+                            + " #" + pedido.getIdPedido() + "..."
+            );
 
             try {
                 int tiempo = 1000 + random.nextInt(2000);
@@ -26,9 +30,13 @@ public class Repartidor implements Runnable {
 
             }catch (InterruptedException e){
                 Thread.currentThread().interrupt();
+                return;
             }
 
-            System.out.println("Pedido entregado");
+            System.out.println(
+                    "[Repartidor: " + nombre + "] Pedido #"
+                            + pedido.getIdPedido() + " entregado."
+            );
 
         }
 

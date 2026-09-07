@@ -1,76 +1,72 @@
 package app;
 
-import model.PedidoComida;
-import model.PedidoEncomienda;
-import model.PedidoExpress;
-import model.ControladorDeEnvios;
+import model.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-
     public static void main(String[] args) {
 
-        // Creación de pedidos
-        PedidoComida comida = new PedidoComida("0001", "San Bernardo", 2);
-        PedidoEncomienda encomienda = new PedidoEncomienda("0002", "Buin", 6);
-        PedidoExpress express = new PedidoExpress("0003", "Av. Italia 123", 12);
-
-        ControladorDeEnvios controlador = new ControladorDeEnvios();
+        // LISTAS DE PEDIDOS
+        List<Pedido> pedidosRepartidor1 = new ArrayList<>();
+        List<Pedido> pedidosRepartidor2 = new ArrayList<>();
+        List<Pedido> pedidosRepartidor3 = new ArrayList<>();
 
 
-        // Reserva de pedidos
-        System.out.println("\n--- RESERVA DE PEDIDOS ---");
-
-        comida.reservar();
-        encomienda.reservar();
-        express.reservar();
+        // PEDIDOS REPARTIDOR 1
+        pedidosRepartidor1.add(new PedidoComida("P001", "Gran Avenida 1234", 4.5));
+        pedidosRepartidor1.add(new PedidoExpress("P002", "Los Morros 567", 3.2));
 
 
-        // Asignación automática
-        System.out.println("\n--- ASIGNACIÓN AUTOMÁTICA ---");
-
-        comida.asignarRepartidor();
-        encomienda.asignarRepartidor();
-        express.asignarRepartidor();
+        // PEDIDOS REPARTIDOR 2
+        pedidosRepartidor2.add(new PedidoEncomienda("P003", "San José 890", 8.0));
+        pedidosRepartidor2.add(new PedidoComida("P004", "Lo Blanco 432", 5.5));
 
 
-        // Resumen de pedidos
-        comida.mostrarResumen();
-        encomienda.mostrarResumen();
-        express.mostrarResumen();
+        // PEDIDOS REPARTIDOR 3
+        pedidosRepartidor3.add(new PedidoExpress("P005", "Colón 765", 2.8));
+        pedidosRepartidor3.add(new PedidoEncomienda("P006", "Portales 321", 7.4));
 
 
-        // Cálculo de tiempos
-        System.out.println("\n--- TIEMPOS DE ENTREGA ---");
-
-        comida.calcularTiempoEntrega();
-        encomienda.calcularTiempoEntrega();
-        express.calcularTiempoEntrega();
+        // REPARTIDORES
+        Repartidor repartidor1 = new Repartidor("Camila", pedidosRepartidor1);
+        Repartidor repartidor2 = new Repartidor("Luis", pedidosRepartidor2);
+        Repartidor repartidor3 = new Repartidor("Sofía", pedidosRepartidor3);
 
 
-        // Asignación manual
-        System.out.println("\n--- ASIGNACIÓN MANUAL ---");
-
-        comida.asignarRepartidor("Felipe");
-        comida.mostrarResumen();
+        // EJECUTOR CON 3 HILOS
+        ExecutorService executor = Executors.newFixedThreadPool(3);
 
 
-        // Despacho
-        System.out.println("\n--- DESPACHO ---");
-
-        controlador.despachar("Pedido Comida 0001");
-        controlador.despachar("Pedido Encomienda 0002");
-
-
-        // Cancelación
-        System.out.println("\n--- CANCELACIÓN ---");
-
-        controlador.cancelar("Pedido Express 0003");
+        // EJECUTAR LOS 3 REPARTIDORES EN PARALELO
+        executor.execute(repartidor1);
+        executor.execute(repartidor2);
+        executor.execute(repartidor3);
 
 
-        // Historial
-        System.out.println("\n--- HISTORIAL DE ENTREGAS ---");
+        // NO RECIBIR MÁS TAREAS
+        executor.shutdown();
 
-        controlador.verHistorial();
+
+        // ESPERAR A QUE TODOS TERMINEN
+        try {
+
+            if (!executor.awaitTermination(1, TimeUnit.MINUTES)) {
+                executor.shutdownNow();
+            }
+
+        } catch (InterruptedException e) {
+
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+
+        }
+
+        System.out.println("Todos los repartidores finalizaron sus entregas.");
     }
 }

@@ -17,6 +17,10 @@ public abstract class Pedido {
         return distanciaKm;
     }
 
+    public String getIdPedido() {
+        return idPedido;
+    }
+
     public void mostrarResumen() {
         System.out.println("\nID: " + idPedido);
         System.out.println("Direccion: " + direccionEntrega);
