@@ -1,44 +1,60 @@
 package model;
 
-import java.util.List;
-import java.util.Random;
 
 public class Repartidor implements Runnable {
 
     private String nombre;
-    private List<Pedido> pedidosAsignados;
-    private Random random = new Random();
+    private ZonaDeCarga zonaDeCarga;
 
-    public Repartidor(String nombre, List<Pedido> pedidosAsignados) {
+    public Repartidor(String nombre, ZonaDeCarga zonaDeCarga) {
         this.nombre = nombre;
-        this.pedidosAsignados = pedidosAsignados;
+        this.zonaDeCarga = zonaDeCarga;
     }
 
     @Override
     public void run() {
-        for (Pedido pedido : pedidosAsignados) {
+
+        while (true) {
+
+            Pedido pedido = zonaDeCarga.retirarPedido();
+            if (pedido == null) {
+                break;
+            }
 
             System.out.println(
-                    "[Repartidor: " + nombre + "] Entregando "
-                            + pedido.getClass().getSimpleName()
-                            + " #" + pedido.getIdPedido() + "..."
+                    "[Repartidor - " + nombre + "] Retirando pedido #"
+                            + pedido.getIdPedido() + "..."
+            );
+
+            pedido.setEstado(EstadoPedido.EN_REPARTO);
+
+            System.out.println(
+                    "[Repartidor - " + nombre + "] Estado: "
+                            + pedido.getEstado()
+            );
+
+            System.out.println(
+                    "[Repartidor - " + nombre + "] Entregando pedido #"
+                            + pedido.getIdPedido() + "..."
             );
 
             try {
-                int tiempo = 1000 + random.nextInt(2000);
-                Thread.sleep(tiempo);
-
-            }catch (InterruptedException e){
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 return;
             }
 
+            pedido.setEstado(EstadoPedido.ENTREGADO);
+
             System.out.println(
-                    "[Repartidor: " + nombre + "] Pedido #"
-                            + pedido.getIdPedido() + " entregado."
+                    "[Repartidor - " + nombre + "] Estado: "
+                            + pedido.getEstado()
             );
+
 
         }
 
     }
+
 }
